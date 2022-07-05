@@ -11,17 +11,18 @@ const HeroBanner = () => {
     }}
     position="relative" p="20px">
          <Typography 
-         color="#FF2625"
-         fontWeight="600"
-         fontSize="26px"
+         color="
+         #00688f"
+         fontWeight="700"
+         fontSize="36px"
 
          >
-            Fitness Club
+            Fitness Baddie
          </Typography>
 
          <Typography
-          fontWeight="700"
-          sx={{ fontSize: {lg: '44px', xs: '40px'}}}
+          fontWeight="500"
+          sx={{ fontSize: {lg: '36px', xs: '30px'}}}
           mb='23px' mt='30px'>
             Sweat, Smile <br/> and Repeat
 
@@ -35,18 +36,19 @@ const HeroBanner = () => {
 
          <Button 
          variant='contained'
-         color='error'
+        //  color='success'
          href='#exercises'
-         sx={{backgroundColor: "#FF2625", padding: '10px'
+         sx={{backgroundColor: "#00688f", padding: '10px'
 
          }}
          >Explore Exercises</Button>
 
          <Typography  
           fontWeight="700"
-          color="#FF2625"
+          color="
+#2f7f9d"
           sx={{
-            opacity:0.1,
+            opacity:0.2,
             display: {lg: 'block', xs:'none'}
           }}
           fontSize="200px"
