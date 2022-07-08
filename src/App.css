@@ -19,6 +19,16 @@ body {
 .map-container {
   height: 500px;
   width: 72vw;
+  z-index: 1500;
+  }
+
+  .geolocation{
+    position: absolute;
+    top: 5vh;
+    left: 65vw;
+    border-radius: 4px;
+    z-index: 3000;
+    height: 30px;
   }
 
   .sidebar {
