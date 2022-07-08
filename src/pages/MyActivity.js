@@ -27,6 +27,10 @@ mapboxgl.accessToken =
 
 
 const MyActivity = () => {
+
+    const [lng, setLng] = useState(-70.9);
+    const [lat, setLat] = useState(42.35);
+    const [zoom, setZoom] = useState(9);
    
 
 
@@ -40,6 +44,20 @@ const MyActivity = () => {
           center: [36.8, -1.3],
           zoom: 10,
         });
+
+
+
+
+
+
+    if (!map) return; // wait for map to initialize
+    map.on('move', () => {
+    setLng(map.getCenter().lng.toFixed(4));
+    setLat(map.getCenter().lat.toFixed(4));
+    setZoom(map.getZoom().toFixed(2));
+    });
+ 
+     
 
 
 
@@ -96,20 +114,8 @@ const MyActivity = () => {
         // Clean up on unmount
         return () => map.remove();
       }, []);
-        // const origin = [36.8, -1.3];
+        
 
-//        
-
-
-//           // add markers to map
-// for (const feature of geojson.features) {
-//     // create a HTML element for each feature
-//     const el = document.createElement('div');
-//     el.className = 'marker';
-//     console.log( map.current, 'map current ')
-//     // make a marker for each feature and add to the map
-//     // new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map.current);
-//   }
 
 const markerClicked = (title) => {
     window.alert(title);
@@ -129,9 +135,9 @@ const markerClicked = (title) => {
    
 
     <div div className="map-container" ref={mapContainerRef} >
-    {/* <div className="sidebar">
+    <div className="sidebar">
     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-    </div> */}
+    </div>
     <button className='geolocation'>My Location</button>
 
     </div>
