@@ -39,23 +39,48 @@ useEffect(() => {
         });
         });
 
-    // const Map = ReactMapboxGl({
-    //     accessToken:
-    //       'pk.eyJ1IjoiY2hyaXNiYXJ0IiwiYSI6ImNrZTFtb3Z2bDAweTMyem1zcmthMGY0ejQifQ.3PzoCgSiG-1-sV1qJvO9Og',
-    //     //   center: [0.02, 37.8582273],
-    //   });
+        console.log( mapContainer.current, 'mapcontainer')
 
-    //   const Map = new mapboxgl.Map({
-    //     container: 'myactivity',
-    //     accessToken:
-    //       'pk.eyJ1IjoiY2hyaXNiYXJ0IiwiYSI6ImNrZTFtb3Z2bDAweTMyem1zcmthMGY0ejQifQ.3PzoCgSiG-1-sV1qJvO9Og',
-    //     style: 'mapbox://styles/mapbox/dark-v10',
-    //     center: [-1.2, 37.8],
-    //     zoom: 3,
-    //     // pitch: 40,
-    //     // projection: 'globe',
-        
-    //     });
+        // const origin = [36.8, -1.3];
+
+        const geojson = {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [36.8, -1.3]
+                },
+                properties: {
+                  title: 'Mapbox',
+                  description: 'Washington, D.C.'
+                }
+              },
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [36.95, -1.39]
+                },
+                properties: {
+                  title: 'Mapbox',
+                  description: 'San Francisco, California'
+                }
+              }
+            ]
+          };
+
+
+          // add markers to map
+for (const feature of geojson.features) {
+    // create a HTML element for each feature
+    const el = document.createElement('div');
+    el.className = 'marker';
+    console.log( map.current, 'map current ')
+    // make a marker for each feature and add to the map
+    new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map.current);
+  }
 
 
   return (
@@ -64,22 +89,9 @@ useEffect(() => {
     <Typography variant='h3' mb='46px'>
         My Activity
       </Typography>
-
-
-        {/* <Map
-        style="mapbox://styles/mapbox/streets-v9"
-        containerStyle={{
-            height: '50vh',
-            width: '70vw',
-      
-        }}
-        >
-        <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-            <Feature coordinates={[37.8582273, 0.02]} />
-        </Layer>
-        </Map> */}
-
-
+      <div className="sidebar">
+    Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+    </div>
 
 <div ref={mapContainer} className="map-container" />
 
