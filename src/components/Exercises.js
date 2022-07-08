@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from '@mui/material'
 
 import { exerciseOptions, fetchData } from '../utils/fetchData'
 import ExerciseCard from './ExerciseCard'
+import MyActivity from '../pages/MyActivity'
 
 
 const Exercises = ({ exercises, setExercises, bodyPart}) => {
@@ -78,6 +79,12 @@ const Exercises = ({ exercises, setExercises, bodyPart}) => {
           size='large'
           />
         )}
+
+      </Stack>
+      
+
+      <Stack>
+        <MyActivity />
 
       </Stack>
     </Box>

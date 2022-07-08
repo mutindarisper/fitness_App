@@ -15,6 +15,11 @@ body {
     width: 0px;
   }
   
+  
+.map-container {
+  height: 400px;
+  }
+  
   .right-arrow,
   .left-arrow {
     cursor: pointer;
