@@ -110,6 +110,19 @@ const MyActivity = () => {
     
         // Add navigation control (the +/- zoom buttons)
         map.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+        map.addControl(
+          new mapboxgl.GeolocateControl({
+          positionOptions: {
+          enableHighAccuracy: true
+          },
+          // When active the map will receive updates to the device's location as it changes.
+          trackUserLocation: true,
+          // Draw an arrow next to the location dot to indicate which direction the device is heading.
+          showUserHeading: true
+          })
+          );
+      
     
         // Clean up on unmount
         return () => map.remove();
@@ -121,6 +134,9 @@ const markerClicked = (title) => {
     window.alert(title);
   };
 
+  //geolocation control
+
+ 
   
 
 
@@ -138,7 +154,7 @@ const markerClicked = (title) => {
     <div className="sidebar">
     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
     </div>
-    <button className='geolocation'>My Location</button>
+    {/* <button className='geolocation'>My Location</button> */}
 
     </div>
 
