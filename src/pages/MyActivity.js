@@ -41,7 +41,7 @@ const MyActivity = () => {
         const map = new mapboxgl.Map({
           container: mapContainerRef.current,
           style: "mapbox://styles/mapbox/streets-v11",
-          center: [36.8, -1.3],
+          center: [ -2.127758, 41.507351 ], //36.8, -1.3
           zoom: 10,
         });
 
@@ -59,7 +59,7 @@ const MyActivity = () => {
  
      
 
-
+// console.log(window.position, 'accessible position')
 
 
         const geoJson = {
@@ -111,8 +111,8 @@ const MyActivity = () => {
         // Add navigation control (the +/- zoom buttons)
         map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-        map.addControl(
-          new mapboxgl.GeolocateControl({
+        // map.addControl(
+          var geolocate = new mapboxgl.GeolocateControl({
           positionOptions: {
           enableHighAccuracy: true
           },
@@ -121,8 +121,83 @@ const MyActivity = () => {
           // Draw an arrow next to the location dot to indicate which direction the device is heading.
           showUserHeading: true
           })
-          );
+          // );
+          //add control to the map
+          map.addControl(geolocate);
+
+          //store the user's updates locations in an array
+          var coordinates = [];
+          // console.log(coordinates, 'SAME COORDINATES?')
       
+
+          // retrieve the user's location
+          function locateUser(e) {
+            // console.log('A geolocate event has occurred.');
+            // console.log("lng:" + e.coords.longitude + ", lat:" + e.coords.latitude)
+            coordinates.push([e.coords.longitude, e.coords.latitude]) //update the empty array with the current location of the user as it changes
+            //see if the array is updated
+            console.log(coordinates, 'Updated COORDINATES?')
+            window.localStorage.setItem("coordinates_", coordinates)
+           
+            //store the coordinates in local storage
+            window.localStorage.setItem("coordinates", JSON.stringify(coordinates)) //we are converting the coordinates (which are arrays) to strings since they are compatible with local storage
+          
+
+          //  var updated_coordinates = JSON.stringify(window.localStorage.getItem("coordinates"))
+          //  console.log(updated_coordinates, 'updated coordinates')
+            // console.log(JSON.stringify(window.localStorage.getItem("coordinates")), 'strings')
+            
+              geolocate.off('geolocate', null);
+              // return coor
+
+          }
+
+          geolocate.on('geolocate', locateUser);
+
+          var updates = window.localStorage.getItem("coordinates")
+          console.log(updates, 'updates')
+          var str = JSON.parse(window.localStorage.getItem("coordinates"))
+          console.log(str, ' str updated')
+
+          var test_coords = JSON.parse(window.localStorage.getItem("coordinates_"))
+          console.log(test_coords, ' test coords updated')
+
+          //now draw the route using the user's location stored in the coordinates array
+
+              //pilot first
+
+          map.on('load', () => {
+            // console.log(updates, 'updates outside')
+            // console.log(str, ' str outside')
+
+          
+            
+            map.addSource('route', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'properties': {},
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates':str
+                    }
+                }
+            });
+            map.addLayer({
+                'id': 'route',
+                'type': 'line',
+                'source': 'route',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': 'red',
+                    'line-width': 20
+                }
+            });
+        });
+          
     
         // Clean up on unmount
         return () => map.remove();
@@ -134,7 +209,41 @@ const markerClicked = (title) => {
     window.alert(title);
   };
 
-  //geolocation control
+  //geolocation control customized
+const start = document.getElementById('geolocation')
+
+
+const getUserLocation  = () => {
+  navigator.geolocation.watchPosition(
+    data => {
+      console.log(data, 'success');
+      window.longitude = data['coords']['latitude']
+      window.latitude = data['coords']['longitude']
+      window.position = [window.latitude, window.longitude]
+      console.log( window.position, 'global position')
+
+      var coordinates = Object.values( window.position)
+      console.log(coordinates, 'coordinate values')
+
+      // new mapboxgl.Marker()
+      //       .setLngLat(data.coords.longitude, data.coords.latitude)
+      //       .addTo(this.map);
+
+    },
+    error => {
+      console.log(error);
+    });
+};
+
+//  const getUserLocation1 =  navigator.geolocation.getCurrentPosition(
+//     data => {
+//       console.log(data);
+
+//     },
+//     error => {
+//       console.log(error);
+//     }); //if the browser is able to get current location then drop the pin
+
 
  
   
@@ -154,7 +263,7 @@ const markerClicked = (title) => {
     <div className="sidebar">
     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
     </div>
-    {/* <button className='geolocation'>My Location</button> */}
+    <button onClick={getUserLocation} id='geolocation' className='geolocation' style={{width: '50px', height: '20px' }}>Start</button>
 
     </div>
 
