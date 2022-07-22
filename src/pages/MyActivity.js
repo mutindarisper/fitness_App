@@ -139,7 +139,7 @@ var directions = new MapboxDirections({
   unit: 'metric',
   profile: 'mapbox/walking',
   controls: {
-    inputs: true,
+    inputs: false,
     instructions: false,
     profileSwitcher: false
   },
