@@ -136,7 +136,13 @@ const MyActivity = () => {
 var directions = new MapboxDirections({
   accessToken: mapboxgl.accessToken,
   unit: 'metric',
-  profile: 'mapbox/walking'
+  profile: 'mapbox/walking',
+  controls: {
+    inputs: true,
+    instructions: false,
+    profileSwitcher: false
+  },
+  // coordinates: [[36.8,-1.34],[36.8,-1.34],[36.8,-1.31],[36.8,-1.31],[36.8,-1.36],[36.8,-1.36],[36.8,-1.36]]
 });
 
 map.addControl(directions, 'top-right');
@@ -146,10 +152,16 @@ map.addControl(directions, 'top-right');
           // console.log(coordinates, 'SAME COORDINATES?')
       
             var current_position = []
+
+            var user_location = []
           // retrieve the user's location
           function locateUser(e) {
-           
-            // console.log('A geolocate event has occurred.');
+
+            user_location = [e.coords.longitude, e.coords.latitude]
+             console.log(user_location, 'user geolocation')
+             window.localStorage.setItem("user_location", user_location)
+            
+          
             current_position.push([e.coords.longitude, e.coords.latitude])
             // console.log("lng:" + e.coords.longitude + ", lat:" + e.coords.latitude)
             coordinates.push([e.coords.longitude, e.coords.latitude]) //update the empty array with the current location of the user as it changes
@@ -174,8 +186,7 @@ map.addControl(directions, 'top-right');
 
           var updates = window.localStorage.getItem("coordinates")
           console.log(updates, 'updates')
-          var str = JSON.parse(window.localStorage.getItem("coordinates"))
-          console.log(str, ' str updated')
+          
 
           // var test_coords = JSON.parse(window.localStorage.getItem("coordinates_"))
           // console.log(test_coords, ' test coords updated')
@@ -185,9 +196,30 @@ map.addControl(directions, 'top-right');
               //pilot first
 
           map.on('load',  (e) => {
-            locateUser();
-            directions.setOrigin(current_position);
-            directions.setDestinaion([e.coords.longitude, e.coords.latitude]);
+            // locateUser();
+            // directions.setOrigin(current_position);
+            // directions.setDestinaion([e.coords.longitude, e.coords.latitude]);
+
+              
+            var str = JSON.parse(window.localStorage.getItem("coordinates"))
+          console.log(str, ' str updated')
+          
+          var first_element = str[0]
+          console.log(first_element, 'first element')
+          window.localStorage.setItem("first_element", first_element)
+
+          var element1 = window.localStorage.getItem("first_element")
+          console.log(element1, 'element 1')
+
+          var last_element = str[str.length - 1];
+          console.log(last_element, 'last element')
+          window.localStorage.setItem("last_element", last_element)
+
+          var element2 = window.localStorage.getItem("last_element")
+          console.log(element2, 'element 2')
+            // console.log(str, 'current position')
+            directions.setOrigin(first_element); // can be address in form setOrigin("12, Elm Street, NY") [36.83,-1.32]
+            directions.setDestination(last_element); // can be address
           
             map.addSource('route', {
                 'type': 'geojson',
@@ -256,10 +288,10 @@ const getUserLocation  = () => {
     });
 };
 
-// const reload = () => {
-//   document.location.reload();
+const reload = () => {
+  document.location.reload();
   
-// }
+}
 
 //  const getUserLocation1 =  navigator.geolocation.getCurrentPosition(
 //     data => {
@@ -289,7 +321,7 @@ const getUserLocation  = () => {
     <div className="sidebar">
     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
     </div>
-    {/* <button onClick={reload} id='geolocation' className='geolocation' style={{width: '150px', height: '20px', top:'50vh', left:'58vw' }}>See my activity</button> */}
+    <button onClick={reload} id='geolocation' className='geolocation' style={{width: '150px', height: '30px', top:'40vh', left:'58vw', borderRadius: '10px' }}>See my activity</button>
 
     </div>
 
