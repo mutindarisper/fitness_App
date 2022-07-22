@@ -6,7 +6,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 // import Map, { GeolocateControl } from "react-map-gl";
 import MapboxDirections from '@nico29/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@nico29/mapbox-gl-directions/dist/mapbox-gl-directions.css'
-
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 
 import { Box, Stack, Typography } from '@mui/material'
