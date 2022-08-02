@@ -6,11 +6,14 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 // import Map, { GeolocateControl } from "react-map-gl";
 import MapboxDirections from '@nico29/mapbox-gl-directions/dist/mapbox-gl-directions'
 import '@nico29/mapbox-gl-directions/dist/mapbox-gl-directions.css'
+// import waffle from '../assets/fonts/waffle_story/Waffle Story.otf'
 // // eslint-disable-next-line import/no-webpack-loader-syntax
 // mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 
 import { Box, Stack, Typography } from '@mui/material'
+import Walk from '../assets/images/walk.png'
+import Run from '../assets/images/run.png'
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
 
@@ -200,7 +203,17 @@ map.addControl(directions, 'top-right');
             // locateUser();
             // directions.setOrigin(current_position);
             // directions.setDestinaion([e.coords.longitude, e.coords.latitude]);
+        
+              // map.remove();
+              // clearRouteLine();
 
+              if (first_element && last_element!==null) {
+                directions.setOrigin(); // can be address in form setOrigin("12, Elm Street, NY") [36.83,-1.32]
+                directions.setDestination();
+              
+               
+            }
+         
               
             var str = JSON.parse(window.localStorage.getItem("coordinates"))
           console.log(str, ' str updated')
@@ -221,32 +234,33 @@ map.addControl(directions, 'top-right');
             // console.log(str, 'current position')
             directions.setOrigin(first_element); // can be address in form setOrigin("12, Elm Street, NY") [36.83,-1.32]
             directions.setDestination(last_element); // can be address
+           
           
-            map.addSource('route', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'properties': {},
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates':coordinates
-                    }
-                }
-            });
-            map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                'paint': {
-                    'line-color': 'red',
-                    'line-width': 5
-                }
-            });
-
+            // map.addSource('route', {
+            //     'type': 'geojson',
+            //     'data': {
+            //         'type': 'Feature',
+            //         'properties': {},
+            //         'geometry': {
+            //             'type': 'LineString',
+            //             'coordinates': coordinates
+            //         }
+            //     }
+            // });
+            // map.addLayer({
+            //     'id': 'route',
+            //     'type': 'line',
+            //     'source': 'route',
+            //     'layout': {
+            //         'line-join': 'round',
+            //         'line-cap': 'round'
+            //     },
+            //     'paint': {
+            //         'line-color': 'red',
+            //         'line-width': 5
+            //     }
+            // });
+           
             
 
             
@@ -289,10 +303,6 @@ const getUserLocation  = () => {
     });
 };
 
-const reload = () => {
-  document.location.reload();
-  
-}
 
 //  const getUserLocation1 =  navigator.geolocation.getCurrentPosition(
 //     data => {
@@ -303,6 +313,9 @@ const reload = () => {
 //       console.log(error);
 //     }); //if the browser is able to get current location then drop the pin
 
+const reload = () => {
+  document.location.reload();
+}
 
  
   
@@ -322,7 +335,20 @@ const reload = () => {
     <div className="sidebar">
     Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
     </div>
-    <button onClick={reload} id='geolocation' className='geolocation' style={{width: '150px', height: '30px', top:'40vh', left:'58vw', borderRadius: '10px' }}>See my activity</button>
+    <button onClick={reload} id='geolocation' className='geolocation'
+     style={{width: '150px', 
+     height: '50px',
+      top:'40vh', 
+      left:'63vw', 
+      borderRadius: '5px', 
+      border:'none',
+      backgroundColor:'#fff' }}
+     >
+      <span className='activity'>My activity</span>
+     
+     <img src={Run}
+     className='run'
+     style={{}}/></button>
 
     </div>
 

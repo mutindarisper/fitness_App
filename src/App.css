@@ -30,6 +30,24 @@ body {
     z-index: 3000;
     height: 30px;
   }
+  .activity{
+    position: relative;
+    font-family:  'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;;
+    font-size: 20px;
+    font-weight: 400;
+    top: -1vh;
+    text-align: left;
+   
+  }
+  .run{
+    position: relative;
+    height:40px;
+    width: 40px;
+    left:0.1vw; 
+    top:0.6vh;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+  }
 
   .sidebar {
     background-color: rgba(35, 55, 75, 0.9);
@@ -113,6 +131,8 @@ body {
     border-bottom-left-radius: 20px;
     text-decoration: none;
     display: flex;
+   margin-bottom: 20px;
+   margin-right: 20px;
     justify-content: space-between;
     flex-direction: column;
     padding-bottom: 10px;

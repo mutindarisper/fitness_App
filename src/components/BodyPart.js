@@ -16,10 +16,10 @@ const BodyPart = ( {item, setBodyPart, bodyPart}) => {
         width: '270px',
         height: '280px',
         cursor: 'pointer',
-        gap: '47px'}}
+        gap: '67px'}}
         onClick= { () => {
             setBodyPart(item) //sets the bodypart to selected item
-            window.scrollTo( {top:1800, left: 100, behavior: 'smooth'})
+            window.scrollTo( {top:1800, left: 100, behavior: 'smooth'} )
         }}
 
     // sx={bodyPart === item ? { borderTop: '4px solid #00688f', background: '#fff', borderBottomLeftRadius: '20px', width: '270px', height: '282px', cursor: 'pointer', gap: '47px' } : { background: '#fff', borderBottomLeftRadius: '20px', width: '270px', height: '282px', cursor: 'pointer', gap: '47px' }}

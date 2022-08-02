@@ -8,11 +8,11 @@ import MyActivity from '../pages/MyActivity'
 
 
 const Exercises = ({ exercises, setExercises, bodyPart}) => {
-  // console.log(exercises, 'exercises')
+  console.log(exercises, 'exercises')
   const [currentPage, setCurrentPage] = useState(1)
   const exercisesPerPage = 9;
 
-  //lets show the first 9 exercises per page
+  // //lets show the first 9 exercises per page
 
   const indexOfLastExercise = currentPage * exercisesPerPage;
 
@@ -27,7 +27,7 @@ const Exercises = ({ exercises, setExercises, bodyPart}) => {
   }
 
   useEffect(() => {
-   const fetchExercisesData = async () => {
+   const fetchExercisesData = async () => { //to be executed in the cards whenever the body part changes
     let exercisesData = []
     if (exercisesData === 'all') {
       exercisesData = await fetchData
@@ -43,7 +43,7 @@ const Exercises = ({ exercises, setExercises, bodyPart}) => {
   }, [bodyPart])
   
   return (
-    <Box id='exercises'
+    <Box id='exercises' //to enable scrrolling to it
     sx={{ mt: { lg: '110px'} }}
     mt= '50px'
     p='20px'
@@ -59,12 +59,21 @@ const Exercises = ({ exercises, setExercises, bodyPart}) => {
       flexWrap='wrap'
       justifyContent='center'
       >
-        { currentExercises.map( (exercise, index) => (
-          // <p>{exercise.name}</p>
-          // now replace the paragrapghs with the exercise cards
-          <ExerciseCard key={index} exercise={exercise}/>
 
-        ))}
+        {currentExercises.map( (exercise, index) => ( //instead of excercises.map
+        //  <p>{exercise.name}</p> 
+
+        <ExerciseCard key={index} exercise={exercise}/>
+        
+        )  )}
+
+
+        {/* { currentExercises.map( (exercise, index) => ( */}
+          {/* // <p>{exercise.name}</p> */}
+          {/* // now replace the paragraphs with the exercise cards     exercise={exercise}*/}
+          {/* <ExerciseCard key={index} /> */}
+
+        {/* // ))} */}
       </Stack>
 
       <Stack mt='100px' alignItems='center'>
@@ -73,7 +82,7 @@ const Exercises = ({ exercises, setExercises, bodyPart}) => {
           color='standard'
           shape='rounded'
           defaultPage={1}
-          count={Math.ceil(exercises.length / exercisesPerPage)}
+          count={Math.ceil(exercises.length / exercisesPerPage )}  //exercisesPerPage
           page={currentPage}
           onChange={paginate}
           size='large'

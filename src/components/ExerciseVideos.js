@@ -13,13 +13,13 @@ const ExerciseVideos = ( {exerciseVideos, name}) => { //receive props
             Watch <span style={{ color: '#00688f', textTransform:'capitalize'}}>{name}</span> exercise videos
         </Typography>
 
-        {/* // loop over the exercise */}
+        {/* // loop over the exercise videos */}
         <Stack justifyContent='flex-start' flexWrap='wrap' alignItems='center'
         sx={{ 
             flexDirection: { lg: 'row'},
             gap: { lg: '110px', xs: '0'}
         }}>
-            { exerciseVideos?.slice(0, 3).map( (item, index) => (
+            { exerciseVideos?.slice(0, 6).map( (item, index) => (
                 <a
                 key={index}
                 className='exercise-video'
